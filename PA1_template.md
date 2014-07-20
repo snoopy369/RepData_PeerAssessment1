@@ -61,6 +61,10 @@ hist(steps$sumSteps,xlab="Sum of Steps per Day",main="Distribution of Daily Step
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
 
+```r
+stepsAvs
+```
+
 ```
 ##               Mean Total Steps per Day Median Total Steps per Day
 ## Daily Average                    10766                      10765
@@ -88,6 +92,12 @@ axis(side=1,at=seq(0,2400,300),lab=sprintf("%02d:00",seq(0,24,3)))
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
 
+```r
+maxSteps <- sprintf("%04d",dayAvs[which(dayAvs$daySteps==max(dayAvs$daySteps)),"interval"])
+```
+
+The maximum number of steps occurs at 0835.
+
 ## Imputing missing values
 
 To impute missing values, we use an average of similar cells method of imputation.  In this case, given the available data, we choose six similar days: two weeks ago, one week ago, one day ago, one day in the future, one week in the future, and two weeks in the future.  
@@ -104,6 +114,7 @@ isnaData <- actData[is.na(actData$steps),]
 ##Checking that NAs are complete days only
 check <- as.matrix(table(c(paste(isnaData$date))))
 colnames(check)<-"Periods NA"
+sumCheck <- sum(check)
 check
 ```
 

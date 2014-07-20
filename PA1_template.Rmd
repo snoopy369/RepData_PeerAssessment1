@@ -42,7 +42,7 @@ We can then view a histogram of the distribution of per-day step totals, and vie
 hist(steps$sumSteps,xlab="Sum of Steps per Day",main="Distribution of Daily Step Totals",breaks=10,col=rgb(.5,.4,1))
 ```
 
-```{r echo=FALSE}
+```{r}
 stepsAvs
 ```
 
@@ -63,7 +63,11 @@ plot(type="l",x=dayAvs$interval, y=dayAvs$daySteps,xaxt="n",
      xlab="Time Intervals")
 
 axis(side=1,at=seq(0,2400,300),lab=sprintf("%02d:00",seq(0,24,3)))
+
+maxSteps <- sprintf("%04d",dayAvs[which(dayAvs$daySteps==max(dayAvs$daySteps)),"interval"])
 ```
+
+The maximum number of steps occurs at `r maxSteps`.
 
 ## Imputing missing values
 
@@ -80,6 +84,7 @@ isnaData <- actData[is.na(actData$steps),]
 ##Checking that NAs are complete days only
 check <- as.matrix(table(c(paste(isnaData$date))))
 colnames(check)<-"Periods NA"
+sumCheck <- sum(check)
 check
 ```
 
